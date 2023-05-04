@@ -1,0 +1,44 @@
+.movie-card {
+    outline: 1px dashed teal;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+
+    width: 300px;
+    background-color: rgb(238, 245, 245);
+    height: 264px;
+
+    /* 248 */
+}
+
+.thumb {
+    height: 200px;
+    outline: 1px dotted tomato;
+}
+
+.item-img {
+    object-fit: cover
+}
+
+.item-info {
+    outline: 1px dotted tomato;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+  
+}
+
+.item-title {
+    font-weight: 500;
+    color: black;
+}
+
+.item-year {
+    color: black;
+    font-size: medium;
+}
