@@ -4,12 +4,10 @@ import MovieList from "components/MovieList/MovieList";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { moviesAPI } from "services/moviesAPI";
-// import { fetchMovieByQuery } from "services/fakeAPI";
 
 
 const Movies = () => {
 
-    // const [filter, setFilter] = useState('');
     const [movies, setMovies] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -20,11 +18,14 @@ const Movies = () => {
     useEffect(() => {
         if (!query) return;
 
+        const controller = new AbortController();
+        const { signal } = controller;
+
         const loadMovies = async () => {
             try {
                 setIsLoading(true);
 
-                const data = await moviesAPI.getMovies(query);
+                const data = await moviesAPI.getMovies(query, signal);
             
                 setMovies(data.results);
             } catch (error) {
@@ -36,22 +37,21 @@ const Movies = () => {
 
         loadMovies()
         
+        return () =>  controller.abort();
+
     }, [query])
  
     const onFilterSubmit = (query) => {
-        // setFilter(query);
         setSearchParams({query})
     }
 
     return (
-        <div>
-            <b>Movies:</b> сторінка пошуку кінофільмів за ключовим словом.
+        <section>
+            <h1 className="visually-hidden">Search movies</h1>
             <FilterForm onSubmit={onFilterSubmit}/>
             {isLoading && <Loader/>}
             {movies && <MovieList movies={movies} />}
-            {/* {movies && console.log(movies)} */}
-
-        </div>
+        </section>
     )
 }
 

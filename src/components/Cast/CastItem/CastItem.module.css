@@ -1,0 +1,11 @@
+.item {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid #EEEEEE;
+}
+
+.accent {
+    font-weight: 500;
+}

@@ -1,0 +1,56 @@
+.wrapper {
+    padding-top: 24px;
+}
+
+@media screen and (min-width: 768px ) {
+    .main-info {
+        display: flex;
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px 8px 0 16px;
+}
+
+.descr-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.add-info {
+    padding: 16px 8px 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.add-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 8px;
+    width: 64px;
+  
+
+    background-color: #dde6ee;
+    cursor: pointer;
+    color: rgb(31, 30, 30);
+    border-radius: 10px;
+    border: 1px solid;
+    font-weight: 500;
+    transition: color 250ms linear, background-color 250ms linear;
+}
+
+.page-link:hover,
+.page-link:focus {
+    background-color: #4c8e52;
+    color: gold;
+}

@@ -4,9 +4,7 @@ import { moviesAPI } from "services/moviesAPI";
 
 import  Loader  from "components/Loader/Loader";
 import CastItem from "./CastItem/CastItem";
-
-// !!! перевірити кількість рендеру та запитів в useEffect, треба оптимізовувавти!
-
+import css from "./Cast.module.css";
 
 const Cast = () => {
 
@@ -16,11 +14,14 @@ const Cast = () => {
 
     useEffect(() => {
 
+        const controller = new AbortController();
+        const { signal } = controller;
+
         setIsLoading(true);
 
         const fetchData = async () => {
             try {
-                const {cast} = await moviesAPI.getCast(movieId);
+                const {cast} = await moviesAPI.getCast(movieId, signal);
                 setCast(cast);
             } catch (error) {
                 console.log(error);
@@ -30,13 +31,16 @@ const Cast = () => {
         } 
 
         fetchData()
+
+        return () =>  controller.abort();
+
     }, [movieId])
     
     return (
         <div>
             {isLoading && <Loader/>}
-            {cast && 
-                <ul>
+            {(cast && cast.length !==0 ) ? 
+                <ul className={css['cast-list']} >
                     {cast.filter(({known_for_department:role}) => role === 'Acting')
                     .map(({name, character, profile_path:img, gender}) => 
                     <CastItem
@@ -47,6 +51,7 @@ const Cast = () => {
                         key={name + character}
                     /> )}
                 </ul>
+                : <div>Cast of this movie wasn't found. Please try again later.</div>
             }
         </div>
     )
@@ -54,17 +59,3 @@ const Cast = () => {
 
 export default Cast;
 
-// {
-//     const defaultImg = gender === 1 ? defaultImgF : defaultImgM;
-//     const imgPath = img ? `${imgBaseURL}${img}` : defaultImg;
-//     return (
-//     <li key={name + character}>
-//         <div>
-//             <img src={imgPath} alt={name} width={120}/>
-//             <p>{name}</p>
-//             <p>Character: 
-//                 {character ? ` ${character}` : ' unknown'}
-//             </p>
-//         </div>
-//     </li>
-// )}

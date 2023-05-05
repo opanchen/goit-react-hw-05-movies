@@ -26,9 +26,7 @@ const SharedLayout = () => {
                 </Suspense>
             </main>
 
-            <footer className={css.footer}>
-                Footer
-            </footer>
+            <footer></footer>
 
         </div>
     )

@@ -1,0 +1,32 @@
+.form {
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px
+}
+
+.input {
+    width: 200px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.search-btn{
+    padding: 8px;
+    width: 64px;
+
+    background-color: #dde6ee;
+    cursor: pointer;
+    color: rgb(31, 30, 30);
+    border-radius: 10px;
+    border: 1px solid;
+    font-weight: 500;
+    transition: color 250ms linear, background-color 250ms linear;
+}
+
+.search-btn:hover,
+.search-btn:focus {
+    background-color: #4c8e52;
+    color: gold;
+}

@@ -1,6 +1,7 @@
 import { moviesAPI } from "services/moviesAPI"
 import defaultImgM from "../../../images/defaultProfileM.png";
 import defaultImgF from "../../../images/defaultProfileF.png";
+import css from "./CastItem.module.css";
 
 const CastItem = ({name, character, img, gender}) => {
 
@@ -9,14 +10,12 @@ const CastItem = ({name, character, img, gender}) => {
     const imgPath = img ? `${moviesAPI.imgBaseURL}${img}` : defaultImg;
 
     return (
-        <li>
-            <div>
-                <img src={imgPath} alt={name} width={120}/>
-                <p>{name}</p>
-                <p>Character: 
-                    {character ? ` ${character}` : ' unknown'}
-                </p>
-            </div>
+        <li className={css.item}> 
+            <img src={imgPath} alt={name} width={120}/>
+            <h3>{name}</h3>
+            <p><span className={css.accent}>Character: </span>
+                {character ? ` ${character}` : ' unknown'}
+            </p>
         </li>
     )
 

@@ -1,8 +1,6 @@
-
 import css from "./MovieList.module.css";
 import MovieListItem from "./MovieListItem/MovieListItem";
-
-// !!! Для головної сторінки в to прописувати повний шлях (напевно. глянь конспект!!!)
+import PropTypes from 'prop-types';
 
 const MovieList = ({movies}) => {
 
@@ -20,6 +18,10 @@ const MovieList = ({movies}) => {
             />)}
         </ul>
     )
+}
+
+MovieList.propTypes = {
+    movies: PropTypes.array.isRequired,
 }
 
 export default MovieList;

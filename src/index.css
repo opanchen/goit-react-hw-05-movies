@@ -53,25 +53,8 @@ code {
     monospace;
 }
 
-/* a {
-  text-decoration: none;
-  color:black;
-}
-
-.movie-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  list-style: none;
-}
-
-.movie-list__item {
-  outline: 1px solid tomato;
-  cursor: pointer;
-} */
-
 .active {
   font-weight: 500;
   color: green;
+
 }
