@@ -1,5 +1,6 @@
 import { useState } from "react";
 import css from "./FilterForm.module.css";
+import PropTypes from 'prop-types';
 
 const FilterForm = ({onSubmit}) => {
 
@@ -32,6 +33,10 @@ const FilterForm = ({onSubmit}) => {
         <button type="submit" className={css['search-btn']}>Search</button>
      </form>
     )
+}
+
+FilterForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
 }
 
 export default FilterForm;

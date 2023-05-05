@@ -26,7 +26,7 @@ const Movies = () => {
                 setIsLoading(true);
 
                 const data = await moviesAPI.getMovies(query, signal);
-            
+        
                 setMovies(data.results);
             } catch (error) {
                 console.log(error);
@@ -50,7 +50,10 @@ const Movies = () => {
             <h1 className="visually-hidden">Search movies</h1>
             <FilterForm onSubmit={onFilterSubmit}/>
             {isLoading && <Loader/>}
-            {movies && <MovieList movies={movies} />}
+            {movies && ( movies.length !== 0 
+                ? <MovieList movies={movies} /> 
+                : <div>Movies with this query weren't found. Please enter valid query and try again!
+                </div>)}
         </section>
     )
 }
