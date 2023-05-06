@@ -8,8 +8,9 @@ import { moviesAPI } from "services/moviesAPI";
 
 const Movies = () => {
 
-    const [movies, setMovies] = useState(null);
+    const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query');
@@ -26,10 +27,15 @@ const Movies = () => {
                 setIsLoading(true);
 
                 const data = await moviesAPI.getMovies(query, signal);
-        
+                
+                if (data.results.length === 0) {
+                    setError("Movies with this query weren't found. Please enter valid query and try again!")
+                    return
+                }
+
                 setMovies(data.results);
             } catch (error) {
-                console.log(error);
+                setError("Something went wrong. Please try again later!");
             } finally {
                 setIsLoading(false);
             }
@@ -42,6 +48,7 @@ const Movies = () => {
     }, [query])
  
     const onFilterSubmit = (query) => {
+        setError(null)
         setSearchParams({query})
     }
 
@@ -50,10 +57,8 @@ const Movies = () => {
             <h1 className="visually-hidden">Search movies</h1>
             <FilterForm onSubmit={onFilterSubmit}/>
             {isLoading && <Loader/>}
-            {movies && ( movies.length !== 0 
-                ? <MovieList movies={movies} /> 
-                : <div>Movies with this query weren't found. Please enter valid query and try again!
-                </div>)}
+            {error && <div>{error}</div>}
+            {movies.length !== 0 && <MovieList movies={movies} /> }
         </section>
     )
 }

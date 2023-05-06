@@ -9,8 +9,9 @@ import css from "./Cast.module.css";
 const Cast = () => {
 
     const {movieId} = useParams();
-    const [cast, setCast] = useState(null);
+    const [cast, setCast] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
 
@@ -22,9 +23,15 @@ const Cast = () => {
         const fetchData = async () => {
             try {
                 const {cast} = await moviesAPI.getCast(movieId, signal);
+
+                if (cast.length === 0) {
+                    setError("Cast of this movie wasn't found. Please try again later.")
+                    return
+                }
+
                 setCast(cast);
             } catch (error) {
-                console.log(error);
+                setError("Cast of this movie wasn't found. Please try again later.")
             } finally {
                 setIsLoading(false);
             }
@@ -37,9 +44,10 @@ const Cast = () => {
     }, [movieId])
     
     return (
-        <div>
+        <>
             {isLoading && <Loader/>}
-            {(cast && cast.length !==0 ) ? 
+            {error && <div>{error}</div>}
+            {cast.length !==0 &&
                 <ul className={css['cast-list']} >
                     {cast.filter(({known_for_department:role}) => role === 'Acting')
                     .map(({name, character, profile_path:img, gender}) => 
@@ -51,9 +59,8 @@ const Cast = () => {
                         key={name + character}
                     /> )}
                 </ul>
-                : <div>Cast of this movie wasn't found. Please try again later.</div>
             }
-        </div>
+        </>
     )
 }
 

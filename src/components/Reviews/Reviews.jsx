@@ -9,6 +9,7 @@ const Reviews = () => {
     const {movieId} = useParams();
     const [reviews, setReviews] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
 
@@ -20,10 +21,15 @@ const Reviews = () => {
         const fetchData = async () => {
             try {
                 const {results} = await moviesAPI.getReviews(movieId, signal)
-                // console.log(results);
+               
+                if (results.length === 0) {
+                    setError("There aren't reviews for this movie yet. Try again later.")
+                    return
+                }
+               
                 setReviews(results)
             } catch (error) {
-                console.log(error);
+               setError("There aren't reviews for this movie yet. Try again later.")
             } finally {
                 setIsLoading(false);
             }
@@ -39,12 +45,8 @@ const Reviews = () => {
     return (
         <>
         {isLoading && <Loader/>}
-
-        {reviews.length === 0 
-            ?   <div>
-                    There aren't reviews for this movie yet.
-                </div> 
-            : <ul className={css['review-list']}>
+        {error && <div>{error}</div>}
+        {reviews.length !== 0 && <ul className={css['review-list']}>
             {reviews.map(({author, content, id, created_at}) => { 
             
                 const date = new Date(created_at);
